@@ -1,0 +1,86 @@
+{
+  "name": "CoffeeShop",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "reviews": {
+      "type": "hasMany",
+      "model": "Review",
+      "foreignKey": ""
+    },
+    "reviewers": {
+      "type": "hasMany",
+      "model": "Reviewer",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {
+    "status": {
+      "returns": [
+        {
+          "arg": "status",
+          "type": "string"
+        }
+      ],
+      "http": [
+        {
+          "path": "/status",
+          "verb": "get"
+        }
+      ]
+    },
+    "getName": {
+      "accepts": [
+        {
+          "arg": "id",
+          "type": "number",
+          "required": true,
+          "http": {
+            "source": "query"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "name",
+          "type": "string"
+        }
+      ],
+      "description": "get shope name by id",
+      "http": [
+        {
+          "path": "/getname",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}
